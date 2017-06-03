@@ -14,6 +14,11 @@ void draw() {
   background(255);
 }
 
+void keyPressed() {
+  if(key == 'e') serial.write("ENABLE\n");
+  if(key == 'd') serial.write("DISABLE\n");
+}
+
 void mousePressed() {
   float x = mouseX - width/2;
   float y = height/2 - mouseY;
