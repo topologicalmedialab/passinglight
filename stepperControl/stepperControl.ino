@@ -40,18 +40,19 @@ void rotate() {
 
   digitalWrite(EN[id], HIGH);
 
+  digitalWrite(DIR[id], HIGH);
   for (int i = 0; i < 640 * 10; i++) //Forward 5000 steps
   {
-    digitalWrite(DIR[id], LOW);
     digitalWrite(PUL[id], HIGH);
     delayMicroseconds(t1);
     digitalWrite(PUL[id], LOW);
     delayMicroseconds(t2);
   }
   delay(1000);
+
+  digitalWrite(DIR[id], LOW);
   for (int i = 0; i < 640 * 10; i++) //Backward 5000 steps
   {
-    digitalWrite(DIR[id], HIGH);
     digitalWrite(PUL[id], HIGH);
     delayMicroseconds(t1);
     digitalWrite(PUL[id], LOW);
