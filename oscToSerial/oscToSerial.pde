@@ -15,5 +15,5 @@ void draw() {
 }
 
 void mousePressed() {
-  serial.write('1');
+  serial.write("TEST 1\n");
 }
