@@ -15,5 +15,11 @@ void draw() {
 }
 
 void mousePressed() {
-  serial.write("TEST 1\n");
+  float x = mouseX - width/2;
+  float y = height/2 - mouseY;
+  float angle = atan2(y, x) / PI * 2;
+  if (angle < 0) angle += 4;
+
+  int id = (int)floor(angle);
+  serial.write("TEST " + str(id) + "\n");
 }
