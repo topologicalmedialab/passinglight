@@ -15,7 +15,7 @@ void setup() {
     pinMode (DIR[i], OUTPUT);
     pinMode (PUL[i], OUTPUT);
 
-    digitalWrite(EN[i], LOW);
+    digitalWrite(EN[i], HIGH);
   }
 }
 
@@ -37,27 +37,36 @@ void rotate() {
   }
 
   int id = atoi(arg);
+  int counterId = (id + 2) % 4;
 
-  digitalWrite(EN[id], HIGH);
+  //digitalWrite(EN[id], HIGH);
+  //digitalWrite(EN[counterId], HIGH);
 
   digitalWrite(DIR[id], HIGH);
-  for (int i = 0; i < 640 * 10; i++) //Forward 5000 steps
+  digitalWrite(DIR[counterId], LOW);
+  for (int i = 0; i < 640 * 7; i++)
   {
     digitalWrite(PUL[id], HIGH);
+    digitalWrite(PUL[counterId], HIGH);
     delayMicroseconds(t1);
     digitalWrite(PUL[id], LOW);
+    digitalWrite(PUL[counterId], LOW);
     delayMicroseconds(t2);
   }
-  delay(1000);
+  delay(2000);
 
   digitalWrite(DIR[id], LOW);
-  for (int i = 0; i < 640 * 10; i++) //Backward 5000 steps
+  digitalWrite(DIR[counterId], HIGH);
+  for (int i = 0; i < 640 * 7; i++)
   {
     digitalWrite(PUL[id], HIGH);
+    digitalWrite(PUL[counterId], HIGH);
     delayMicroseconds(t1);
     digitalWrite(PUL[id], LOW);
+    digitalWrite(PUL[counterId], LOW);
     delayMicroseconds(t2);
   }
-  digitalWrite(EN[id], LOW);
+  //digitalWrite(EN[id], LOW);
+  //digitalWrite(EN[counterId], LOW);
 }
 
