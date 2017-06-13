@@ -6,8 +6,8 @@ OscP5 oscP5;
 
 Serial serial;
 
-int lastMoved = -10000;
-int intervalMoved = 12 * 1000;
+int lastMoved = -100000;
+int intervalMoved = 18 * 1000;
 
 void setup() 
 {
