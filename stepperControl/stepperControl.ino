@@ -38,52 +38,48 @@ void rotate() {
     return;
   }
 
-  int id = atoi(arg);
-  int id2 = (id + 1) % 4;
-  int counterId = (id + 2) % 4;
-  int counterId2 = (id + 2 + 1) % 4;
+  int id1 = atoi(arg);
+  int id2 = (id1 + 1) % 4;
+  int counterId1 = (id1 + 2) % 4;
+  int counterId2 = (id1 + 2 + 1) % 4;
 
-  //digitalWrite(EN[id], HIGH);
-  //digitalWrite(EN[counterId], HIGH);
-
-  digitalWrite(DIR[id], HIGH);
+  digitalWrite(DIR[id1], HIGH);
   digitalWrite(DIR[id2], HIGH);
-  digitalWrite(DIR[counterId], LOW);
+  digitalWrite(DIR[counterId1], LOW);
   digitalWrite(DIR[counterId2], LOW);
   for (int i = 0; i < 640 * 8; i++)
   {
-    digitalWrite(PUL[id], HIGH);
+    digitalWrite(PUL[id1], HIGH);
     digitalWrite(PUL[id2], HIGH);
-    digitalWrite(PUL[counterId], HIGH);
+    digitalWrite(PUL[counterId1], HIGH);
     digitalWrite(PUL[counterId2], HIGH);
     delayMicroseconds(t1);
-    digitalWrite(PUL[id], LOW);
+    digitalWrite(PUL[id1], LOW);
     digitalWrite(PUL[id2], LOW);
-    digitalWrite(PUL[counterId], LOW);
+    digitalWrite(PUL[counterId1], LOW);
     digitalWrite(PUL[counterId2], LOW);
     delayMicroseconds(t2);
   }
   delay(3000);
 
-  digitalWrite(DIR[id], LOW);
+  digitalWrite(DIR[id1], LOW);
   digitalWrite(DIR[id2], LOW);
-  digitalWrite(DIR[counterId], HIGH);
+  digitalWrite(DIR[counterId1], HIGH);
   digitalWrite(DIR[counterId2], HIGH);
   for (int i = 0; i < 640 * 8; i++)
   {
-    digitalWrite(PUL[id], HIGH);
+    digitalWrite(PUL[id1], HIGH);
     digitalWrite(PUL[id2], HIGH);
-    digitalWrite(PUL[counterId], HIGH);
+    digitalWrite(PUL[counterId1], HIGH);
     digitalWrite(PUL[counterId2], HIGH);
     delayMicroseconds(t1);
-    digitalWrite(PUL[id], LOW);
+    digitalWrite(PUL[id1], LOW);
     digitalWrite(PUL[id2], LOW);
-    digitalWrite(PUL[counterId], LOW);
+    digitalWrite(PUL[counterId1], LOW);
     digitalWrite(PUL[counterId2], LOW);
     delayMicroseconds(t2);
   }
-  //digitalWrite(EN[id], LOW);
-  //digitalWrite(EN[counterId], LOW);
+
 }
 
 void enable() {
