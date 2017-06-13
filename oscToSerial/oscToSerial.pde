@@ -6,6 +6,9 @@ OscP5 oscP5;
 
 Serial serial;
 
+int lastMoved = -10000;
+int intervalMoved = 12 * 1000;
+
 void setup() 
 {
   size(200, 200);
@@ -32,7 +35,10 @@ void mousePressed() {
   if (angle < 0) angle += 4;
 
   int id = (int)floor(angle);
-  serial.write("TEST " + str(id) + "\n");
+  if (millis() - lastMoved > intervalMoved) {
+    serial.write("TEST " + str(id) + "\n");
+    lastMoved = millis();
+  }
 }
 
 void oscEvent(OscMessage theOscMessage) {
@@ -40,6 +46,9 @@ void oscEvent(OscMessage theOscMessage) {
 
   if (theOscMessage.checkAddrPattern("/passing/plate/tip")==true) {
     int id = theOscMessage.get(0).intValue();
-    serial.write("TEST " + str(id) + "\n");
+    if (millis() - lastMoved > intervalMoved) {
+      serial.write("TEST " + str(id) + "\n");
+      lastMoved = millis();
+    }
   }
 }
