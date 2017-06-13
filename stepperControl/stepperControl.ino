@@ -28,6 +28,9 @@ void loop() {
 int t1 = 250 * 1.5;
 int t2 = t1;
 
+int id1Preset[] = {0,  1, 1,  2, 2,  3, 3,  0};
+int id2Preset[] = {1, -1, 2, -1, 3, -1, 0, -1};
+
 void rotate() {
   char *arg;
   arg = command.next();
@@ -38,45 +41,52 @@ void rotate() {
     return;
   }
 
-  int id1 = atoi(arg);
-  int id2 = (id1 + 1) % 4;
+  int angle = atoi(arg);
+
+  if (angle < 0 || 8 <= angle) {
+    Serial.println("usage: TEST n");
+    return;
+  }
+
+  int id1 = id1Preset[angle];
+  int id2 = id2Preset[angle];
   int counterId1 = (id1 + 2) % 4;
-  int counterId2 = (id1 + 2 + 1) % 4;
+  int counterId2 = (id2 < 0) ? -1 : (id1 + 2 + 1) % 4;
 
   digitalWrite(DIR[id1], HIGH);
-  digitalWrite(DIR[id2], HIGH);
+  if(id2 >= 0) digitalWrite(DIR[id2], HIGH);
   digitalWrite(DIR[counterId1], LOW);
-  digitalWrite(DIR[counterId2], LOW);
+  if(id2 >= 0) digitalWrite(DIR[counterId2], LOW);
   for (int i = 0; i < 640 * 8; i++)
   {
     digitalWrite(PUL[id1], HIGH);
-    digitalWrite(PUL[id2], HIGH);
+    if(id2 >= 0) digitalWrite(PUL[id2], HIGH);
     digitalWrite(PUL[counterId1], HIGH);
-    digitalWrite(PUL[counterId2], HIGH);
+    if(id2 >= 0) digitalWrite(PUL[counterId2], HIGH);
     delayMicroseconds(t1);
     digitalWrite(PUL[id1], LOW);
-    digitalWrite(PUL[id2], LOW);
+    if(id2 >= 0) digitalWrite(PUL[id2], LOW);
     digitalWrite(PUL[counterId1], LOW);
-    digitalWrite(PUL[counterId2], LOW);
+    if(id2 >= 0) digitalWrite(PUL[counterId2], LOW);
     delayMicroseconds(t2);
   }
   delay(3000);
 
   digitalWrite(DIR[id1], LOW);
-  digitalWrite(DIR[id2], LOW);
+  if(id2 >= 0) digitalWrite(DIR[id2], LOW);
   digitalWrite(DIR[counterId1], HIGH);
-  digitalWrite(DIR[counterId2], HIGH);
+  if(id2 >= 0) digitalWrite(DIR[counterId2], HIGH);
   for (int i = 0; i < 640 * 8; i++)
   {
     digitalWrite(PUL[id1], HIGH);
-    digitalWrite(PUL[id2], HIGH);
+    if(id2 >= 0) digitalWrite(PUL[id2], HIGH);
     digitalWrite(PUL[counterId1], HIGH);
-    digitalWrite(PUL[counterId2], HIGH);
+    if(id2 >= 0) digitalWrite(PUL[counterId2], HIGH);
     delayMicroseconds(t1);
     digitalWrite(PUL[id1], LOW);
-    digitalWrite(PUL[id2], LOW);
+    if(id2 >= 0) digitalWrite(PUL[id2], LOW);
     digitalWrite(PUL[counterId1], LOW);
-    digitalWrite(PUL[counterId2], LOW);
+    if(id2 >= 0) digitalWrite(PUL[counterId2], LOW);
     delayMicroseconds(t2);
   }
 
