@@ -6,9 +6,12 @@ int EN [] = {2, 5,  8, 11};
 int DIR[] = {3, 6,  9, 12}; //define Direction pin
 int PUL[] = {4, 7, 10, 13}; //define Pulse pin
 
+bool bRotated = false;
+
 void setup() {
   Serial.begin(115200);
-  command.addCommand("TEST", rotate);
+  command.addCommand("ROTATE", rotate);
+  command.addCommand("UNROTATE", unrotate);
   command.addCommand("ENABLE", enable);
   command.addCommand("DISABLE", disable);
 
@@ -28,10 +31,14 @@ void loop() {
 int t1 = 250 * 1.5;
 int t2 = t1;
 
+int id1, id2;
+int counterId1, counterId2;
 int id1Preset[] = {0,  1, 1,  2, 2,  3, 3,  0};
 int id2Preset[] = {1, -1, 2, -1, 3, -1, 0, -1};
 
 void rotate() {
+  if(bRotated == true) return;
+
   char *arg;
   arg = command.next();
   Serial.println(arg);
@@ -48,10 +55,10 @@ void rotate() {
     return;
   }
 
-  int id1 = id1Preset[angle];
-  int id2 = id2Preset[angle];
-  int counterId1 = (id1 + 2) % 4;
-  int counterId2 = (id2 < 0) ? -1 : (id1 + 2 + 1) % 4;
+  id1 = id1Preset[angle];
+  id2 = id2Preset[angle];
+  counterId1 = (id1 + 2) % 4;
+  counterId2 = (id2 < 0) ? -1 : (id1 + 2 + 1) % 4;
 
   t1 = t2 = 250 * 1.5;
   digitalWrite(DIR[id1], HIGH);
@@ -71,8 +78,13 @@ void rotate() {
     if(id2 >= 0) digitalWrite(PUL[counterId2], LOW);
     delayMicroseconds(t2);
   }
-  delay(500);
+  delay(50);
 
+  bRotated = true;
+}
+
+void unrotate() {
+  if(bRotated == false) return;
   t1 = t2 = 250 * 3;
   digitalWrite(DIR[id1], LOW);
   if(id2 >= 0) digitalWrite(DIR[id2], LOW);
@@ -92,6 +104,7 @@ void rotate() {
     delayMicroseconds(t2);
   }
 
+  bRotated = false;
 }
 
 void enable() {

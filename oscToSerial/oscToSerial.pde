@@ -26,6 +26,7 @@ void draw() {
 void keyPressed() {
   if (key == 'e') serial.write("ENABLE\n");
   if (key == 'd') serial.write("DISABLE\n");
+  if (key == '0') serial.write("UNROTATE\n");
 }
 
 void mousePressed() {
@@ -35,10 +36,8 @@ void mousePressed() {
   if (angle < 0) angle += 4;
 
   int id = (int)floor(angle);
-  if (millis() - lastMoved > intervalMoved) {
-    serial.write("TEST " + str(id * 2) + "\n");
-    lastMoved = millis();
-  }
+  serial.write("ROTATE " + str(id * 2) + "\n");
+  lastMoved = millis();
 }
 
 void oscEvent(OscMessage theOscMessage) {
@@ -46,10 +45,12 @@ void oscEvent(OscMessage theOscMessage) {
 
   if (theOscMessage.checkAddrPattern("/passing/plate/tip")==true) {
     int id = theOscMessage.get(0).intValue();
-    if (id <= 0 || 4 < id) return;
-    if (millis() - lastMoved > intervalMoved) {
-      serial.write("TEST " + str((id-1) * 2) + "\n");
+    if (id < 0 || 4 < id) return;
+    if (id > 0) {
+      serial.write("ROTATE " + str((id-1) * 2) + "\n");
       lastMoved = millis();
+    } else if (id == 0) {
+      serial.write("UNROTATE\n");
     }
   }
 }
