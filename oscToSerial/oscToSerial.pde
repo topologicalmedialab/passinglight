@@ -7,7 +7,7 @@ OscP5 oscP5;
 Serial serial;
 
 int lastMoved = -100000;
-int intervalMoved = 18 * 1000;
+int intervalMoved = (15 + 0) * 1000;
 
 void setup() 
 {
@@ -46,9 +46,9 @@ void oscEvent(OscMessage theOscMessage) {
 
   if (theOscMessage.checkAddrPattern("/passing/plate/tip")==true) {
     int id = theOscMessage.get(0).intValue();
-    if(id < 0 || 3 < id) return;
+    if (id <= 0 || 4 < id) return;
     if (millis() - lastMoved > intervalMoved) {
-      serial.write("TEST " + str(id * 2) + "\n");
+      serial.write("TEST " + str((id-1) * 2) + "\n");
       lastMoved = millis();
     }
   }

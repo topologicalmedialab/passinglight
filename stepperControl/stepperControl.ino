@@ -71,7 +71,7 @@ void rotate() {
     if(id2 >= 0) digitalWrite(PUL[counterId2], LOW);
     delayMicroseconds(t2);
   }
-  delay(3000);
+  delay(500);
 
   t1 = t2 = 250 * 3;
   digitalWrite(DIR[id1], LOW);
