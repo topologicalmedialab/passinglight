@@ -40,17 +40,42 @@ void mousePressed() {
   lastMoved = millis();
 }
 
-void oscEvent(OscMessage theOscMessage) {
+void oscEvent(OscMessage m) {
   /* check if theOscMessage has the address pattern we are looking for. */
+  println(m.addrPattern() + " " + m.typetag());
 
-  if (theOscMessage.checkAddrPattern("/passing/plate/tip")==true) {
-    int id = theOscMessage.get(0).intValue();
-    if (id < 0 || 4 < id) return;
-    if (id > 0) {
-      serial.write("ROTATE " + str((id-1) * 2) + "\n");
-      lastMoved = millis();
-    } else if (id == 0) {
+  if (m.checkAddrPattern("/passing/plate/tip")) {
+    //int id = m.get(0).intValue();
+    //if (id < 0 || 4 < id) return;
+    //if (id > 0) {
+    //  serial.write("ROTATE " + str((id-1) * 2) + "\n");
+    //  lastMoved = millis();
+    //} else if (id == 0) {
+    //  serial.write("UNROTATE\n");
+    //}
+  } else if (m.checkAddrPattern("/passing/plate/tip/right")) {
+    if(m.get(0).intValue() == 0) {
       serial.write("UNROTATE\n");
+    } else {
+      serial.write("ROTATE " + str(0) + "\n");
+    }
+  } else if (m.checkAddrPattern("/passing/plate/tip/up")) {
+    if(m.get(0).intValue() == 0) {
+      serial.write("UNROTATE\n");
+    } else {
+      serial.write("ROTATE " + str(2) + "\n");
+    }
+  } else if (m.checkAddrPattern("/passing/plate/tip/left")) {
+    if(m.get(0).intValue() == 0) {
+      serial.write("UNROTATE\n");
+    } else {
+      serial.write("ROTATE " + str(4) + "\n");
+    }
+  } else if (m.checkAddrPattern("/passing/plate/tip/down")) {
+    if(m.get(0).intValue() == 0) {
+      serial.write("UNROTATE\n");
+    } else {
+      serial.write("ROTATE " + str(6) + "\n");
     }
   }
 }
