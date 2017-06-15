@@ -4,6 +4,44 @@
 
 //#include <omp.h>
 
+class SayThread : public ofThread {
+public:
+    string s;
+    void threadedFunction() {
+        system((string("say ") + s).c_str());
+        stopThread();
+    }
+};
+SayThread sayThread;
+
+class TipThread : public ofThread {
+public:
+    int n;
+    ofApp* app;
+    void threadedFunction() {
+        {
+            ofxOscMessage m;
+            m.setAddress("/passing/vvvv/tip");
+            m.addIntArg(n);
+            app->sender.sendMessage(m, false);
+
+            sayThread.s = ofToString(n);
+            sayThread.startThread(true);
+        }
+        ofSleepMillis(10 * 1000);
+        {
+            ofxOscMessage m;
+            m.setAddress("/passing/vvvv/tip");
+            m.addIntArg(0);
+            app->sender.sendMessage(m, false);
+            
+            sayThread.s = "zero";
+            sayThread.startThread(true);
+        }
+    }
+};
+TipThread tipThread;
+
 ofxNI2::Device *device;
 ofxNI2::IrStream ir;
 ofxNI2::ColorStream color;
@@ -12,7 +50,9 @@ ofxNI2::DepthStream depth;
 //--------------------------------------------------------------
 void ofApp::setup()
 {
-	ofSetFrameRate(60);
+    tipThread.app = this;
+
+    ofSetFrameRate(60);
 	ofSetVerticalSync(true);
 	ofBackground(0);
 	
@@ -95,27 +135,25 @@ void ofApp::draw()
     
     if(bSent == false) {
         if(count > 1500 && ofGetElapsedTimef() - sentTime > 10) {
-            ofxOscMessage m;
-            m.setAddress("/passing/vvvv/tip");
             if(weight < -0.5)
-                m.addIntArg(1);
+                tipThread.n = 1;
             else if(weight > 0.5)
-                m.addIntArg(3);
+                tipThread.n = 3;
             else
-                m.addIntArg(4);
-            sender.sendMessage(m, false);
+                tipThread.n = 4;
+            tipThread.startThread(true);
             
             bSent = true;
             sentTime = ofGetElapsedTimef();
         }
     }
     else {
-        if(count < 1000 || ofGetElapsedTimef() - sentTime > 10) {
+        if(ofGetElapsedTimef() - sentTime > 10) {
+        }
+        if(count < 1000) {
             bSent = false;
-            ofxOscMessage m;
-            m.setAddress("/passing/vvvv/tip");
-            m.addIntArg(0);
-            sender.sendMessage(m, false);
+            sayThread.s = "reset";
+            sayThread.startThread(true);
         }
     }
     
