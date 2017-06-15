@@ -1,0 +1,94 @@
+#N canvas 805 714 1163 594 10;
+#X msg 60 340 avgRate \$1;
+#X msg 156 339 minRadius \$1;
+#X msg 254 339 maxRadius \$1;
+#X msg 352 339 expRadius \$1;
+#X msg 446 339 minDepth \$1;
+#X msg 536 339 maxDepth \$1;
+#X msg 628 339 expDepth \$1;
+#X msg 719 338 riseFactor \$1;
+#X floatatom 60 297 8 0 100000 0 - - -, f 8;
+#X floatatom 156 295 5 0 0 0 - - -, f 5;
+#X floatatom 254 297 5 0 0 0 - - -, f 5;
+#X floatatom 446 296 5 0 0 0 - - -, f 5;
+#X floatatom 536 296 5 0 0 0 - - -, f 5;
+#X floatatom 628 297 5 0 0 0 - - -, f 5;
+#X floatatom 719 296 5 0 0 0 - - -, f 5;
+#X floatatom 352 297 5 0 0 0 - - -, f 5;
+#X floatatom 825 297 5 0 0 0 - - -, f 5;
+#X obj 60 445 dac~;
+#X obj 60 398 fluidflow~ 128;
+#X msg 825 338 riseCutoff \$1;
+#X text 72 25 fluidflow~ - Liquid sounds model;
+#X msg 849 31 Sound Design Toolkit \; (C) 2001 - 2016 \; \; Project
+SOb - soundobject.org \; Project CLOSED - closed.ircam.fr \; Project
+NIW - soundobject.org/niw \; Project SkAT-VG - skatvg.eu;
+#X obj 352 156 vsl 15 128 0 10 0 0 empty expRadius empty 0 -9 0 10
+-262144 -1 -1 3810 1;
+#X obj 254 156 vsl 15 128 0.15 150 0 0 empty maxRadius empty 0 -9 0
+10 -262144 -1 -1 411 1;
+#X obj 60 156 vsl 15 128 1 100000 1 0 empty avgRate empty 0 -9 0 10
+-262144 -1 -1 765 1;
+#X obj 536 156 vsl 15 128 0 1 0 0 empty maxDepth empty 0 -9 0 10 -262144
+-1 -1 12700 1;
+#X obj 628 157 vsl 15 128 0 10 0 0 empty expDepth empty 0 -9 0 10 -262144
+-1 -1 1270 1;
+#X obj 719 156 vsl 15 128 0 4 0 0 empty riseFactor empty 0 -9 0 10
+-262144 -1 -1 317 1;
+#X obj 825 157 vsl 15 128 0 1 0 0 empty riseCutoff empty 0 -9 0 10
+-262144 -1 -1 11430 1;
+#X obj 156 154 vsl 15 128 0.15 150 0 0 empty minRadius empty 0 -9 0
+10 -262144 -1 -1 0 1;
+#X obj 446 155 vsl 15 128 0 1 0 0 empty minDepth empty 0 -9 0 10 -262144
+-1 -1 0 1;
+#X text 35 134 Bubbles/sec;
+#X text 135 134 Min. and max. radius (mm);
+#X text 323 135 Radius gamma;
+#X text 441 135 Min. and max. depth;
+#X text 600 136 Depth gamma;
+#X text 691 136 Bloop amount;
+#X text 776 136 Min. blooping depth;
+#X obj 254 317 * 0.001;
+#X obj 156 316 * 0.001;
+#X text 315 398 Arg: n. of voices (set it large for dense events);
+#X obj 961 228 r pd;
+#X obj 961 251 route dsp;
+#X obj 961 274 select 1;
+#X obj 971 296 loadbang;
+#X msg 961 318 \; avgRate 2 \; minRadius 0.15 \; maxRadius 5 \; expRadius
+3 \; minDepth 0 \; maxDepth 1 \; expDepth 1 \; riseFactor 0.1 \; riseCutoff
+0.9 \;;
+#X connect 0 0 18 0;
+#X connect 1 0 18 0;
+#X connect 2 0 18 0;
+#X connect 3 0 18 0;
+#X connect 4 0 18 0;
+#X connect 5 0 18 0;
+#X connect 6 0 18 0;
+#X connect 7 0 18 0;
+#X connect 8 0 0 0;
+#X connect 9 0 39 0;
+#X connect 10 0 38 0;
+#X connect 11 0 4 0;
+#X connect 12 0 5 0;
+#X connect 13 0 6 0;
+#X connect 14 0 7 0;
+#X connect 15 0 3 0;
+#X connect 16 0 19 0;
+#X connect 18 0 17 1;
+#X connect 19 0 18 0;
+#X connect 22 0 15 0;
+#X connect 23 0 10 0;
+#X connect 24 0 8 0;
+#X connect 25 0 12 0;
+#X connect 26 0 13 0;
+#X connect 27 0 14 0;
+#X connect 28 0 16 0;
+#X connect 29 0 9 0;
+#X connect 30 0 11 0;
+#X connect 38 0 2 0;
+#X connect 39 0 1 0;
+#X connect 41 0 42 0;
+#X connect 42 0 43 0;
+#X connect 43 0 45 0;
+#X connect 44 0 45 0;
