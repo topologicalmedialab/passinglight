@@ -8,7 +8,7 @@ class SayThread : public ofThread {
 public:
     string s;
     void threadedFunction() {
-        system((string("say ") + s).c_str());
+//        system((string("say ") + s).c_str());
         stopThread();
     }
 };
@@ -22,13 +22,13 @@ public:
         {
             ofxOscMessage m;
             m.setAddress("/passing/vvvv/tip");
-            m.addIntArg(n);
+            m.addIntArg(2);
             app->sender.sendMessage(m, false);
 
             sayThread.s = ofToString(n);
             sayThread.startThread(true);
         }
-        ofSleepMillis(10 * 1000);
+        ofSleepMillis(1 * 1000);
         {
             ofxOscMessage m;
             m.setAddress("/passing/vvvv/tip");
@@ -114,16 +114,10 @@ void ofApp::draw()
 		for (int j = 0; j < depth.getWidth(); j+=2) {
 			auto v = depth.getWorldCoordinateAt(j, i);
             
-            if(v.z > 5000.0f * 0.6f) v.z = 1000000;
-            else if (v.z > 0) {
-                if(v.x < 0) {
+            if(ofInRange(i, depth.getHeight() * 0.5f - 10, depth.getHeight() * 0.5f + 10)) {
+                if(ofInRange(v.z, 10, 2500)) {
+                    weight += v.z;
                     count++;
-                    if(v.y > 200)
-                        weight += 1;
-                    else if(v.y < -200)
-                        weight += -1;
-                    else
-                        weight += 0;
                 }
             }
             v.z *= -1;
@@ -134,7 +128,7 @@ void ofApp::draw()
     if(count > 0) weight = weight / count;
     
     if(bSent == false) {
-        if(count > 1500 && ofGetElapsedTimef() - sentTime > 10) {
+        if(count > 500 && ofGetElapsedTimef() - sentTime > 10) {
             if(weight < -0.5)
                 tipThread.n = 1;
             else if(weight > 0.5)
@@ -150,7 +144,7 @@ void ofApp::draw()
     else {
         if(ofGetElapsedTimef() - sentTime > 10) {
         }
-        if(count < 1000) {
+        if(count < 300) {
             bSent = false;
             sayThread.s = "reset";
             sayThread.startThread(true);
