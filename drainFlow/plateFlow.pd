@@ -1,4 +1,4 @@
-#N canvas 805 714 1163 594 10;
+#N canvas 237 638 1163 594 10;
 #X msg 60 340 avgRate \$1;
 #X msg 156 339 minRadius \$1;
 #X msg 254 339 maxRadius \$1;
@@ -28,7 +28,7 @@ NIW - soundobject.org/niw \; Project SkAT-VG - skatvg.eu;
 #X obj 254 156 vsl 15 128 0.15 150 0 0 empty maxRadius empty 0 -9 0
 10 -262144 -1 -1 411 1;
 #X obj 60 156 vsl 15 128 1 100000 1 0 empty avgRate empty 0 -9 0 10
--262144 -1 -1 765 1;
+-262144 -1 -1 1565 1;
 #X obj 536 156 vsl 15 128 0 1 0 0 empty maxDepth empty 0 -9 0 10 -262144
 -1 -1 12700 1;
 #X obj 628 157 vsl 15 128 0 10 0 0 empty expDepth empty 0 -9 0 10 -262144
@@ -58,6 +58,8 @@ NIW - soundobject.org/niw \; Project SkAT-VG - skatvg.eu;
 #X msg 961 318 \; avgRate 2 \; minRadius 0.15 \; maxRadius 5 \; expRadius
 3 \; minDepth 0 \; maxDepth 1 \; expDepth 1 \; riseFactor 0.1 \; riseCutoff
 0.9 \;;
+#X obj 230 436 *~;
+#X floatatom 253 403 5 0 0 0 - - -, f 5;
 #X connect 0 0 18 0;
 #X connect 1 0 18 0;
 #X connect 2 0 18 0;
@@ -75,7 +77,7 @@ NIW - soundobject.org/niw \; Project SkAT-VG - skatvg.eu;
 #X connect 14 0 7 0;
 #X connect 15 0 3 0;
 #X connect 16 0 19 0;
-#X connect 18 0 17 1;
+#X connect 18 0 46 0;
 #X connect 19 0 18 0;
 #X connect 22 0 15 0;
 #X connect 23 0 10 0;
@@ -92,3 +94,5 @@ NIW - soundobject.org/niw \; Project SkAT-VG - skatvg.eu;
 #X connect 42 0 43 0;
 #X connect 43 0 45 0;
 #X connect 44 0 45 0;
+#X connect 46 0 17 1;
+#X connect 47 0 46 1;
