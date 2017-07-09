@@ -1,4 +1,4 @@
-#N canvas 766 326 1051 455 10;
+#N canvas 1052 334 1051 478 10;
 #X msg 33 320 avgRate \$1;
 #X msg 129 319 minRadius \$1;
 #X msg 227 319 maxRadius \$1;
@@ -28,7 +28,7 @@ NIW - soundobject.org/niw \; Project SkAT-VG - skatvg.eu;
 #X obj 227 136 vsl 15 128 0.15 150 0 0 empty maxRadius empty 0 -9 0
 10 -262144 -1 -1 411 1;
 #X obj 33 136 vsl 15 128 0 1000 0 0 empty avgRate empty 0 -9 0 10 -262144
--1 -1 264 1;
+-1 -1 325 1;
 #X obj 509 136 vsl 15 128 0 1 0 0 empty maxDepth empty 0 -9 0 10 -262144
 -1 -1 12700 1;
 #X obj 601 137 vsl 15 128 0 10 0 0 empty expDepth empty 0 -9 0 10 -262144
@@ -89,6 +89,7 @@ expRadius 3 \; minDepth 0 \; maxDepth 1 \; expDepth 1 \; riseFactor
 #X connect 15 0 3 0;
 #X connect 16 0 19 0;
 #X connect 18 0 17 0;
+#X connect 18 0 17 1;
 #X connect 19 0 18 0;
 #X connect 22 0 15 0;
 #X connect 23 0 10 0;
