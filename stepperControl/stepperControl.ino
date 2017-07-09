@@ -22,6 +22,11 @@ void setup() {
 
     digitalWrite(EN[i], HIGH);
   }
+
+  delay(3 * 1000);
+  rotateWithArgs(0);
+  delay(1 * 1000);
+  unrotate();
 }
 
 void loop() {
@@ -39,8 +44,6 @@ int id2Preset[] = {1, -1, 2, -1, 3, -1, 0, -1};
 const int stepCount = 640 * 8;
 
 void rotate() {
-  if(bRotated == true) return;
-
   char *arg;
   arg = command.next();
   Serial.println(arg);
@@ -52,10 +55,16 @@ void rotate() {
 
   int angle = atoi(arg);
 
+  rotateWithArgs(angle);
+}
+
+void rotateWithArgs(int angle) {
   if (angle < 0 || 8 <= angle) {
     Serial.println("usage: TEST n");
     return;
   }
+
+  if(bRotated == true) return;
 
   id1 = id1Preset[angle];
   id2 = id2Preset[angle];
