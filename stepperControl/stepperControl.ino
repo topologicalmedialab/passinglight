@@ -36,6 +36,8 @@ int counterId1, counterId2;
 int id1Preset[] = {0,  1, 1,  2, 2,  3, 3,  0};
 int id2Preset[] = {1, -1, 2, -1, 3, -1, 0, -1};
 
+const int stepCount = 640 * 8;
+
 void rotate() {
   if(bRotated == true) return;
 
@@ -65,7 +67,7 @@ void rotate() {
   if(id2 >= 0) digitalWrite(DIR[id2], HIGH);
   digitalWrite(DIR[counterId1], LOW);
   if(id2 >= 0) digitalWrite(DIR[counterId2], LOW);
-  for (int i = 0; i < 640 * 8; i++)
+  for (int i = 0; i < stepCount; i++)
   {
     digitalWrite(PUL[id1], HIGH);
     if(id2 >= 0) digitalWrite(PUL[id2], HIGH);
@@ -90,7 +92,7 @@ void unrotate() {
   if(id2 >= 0) digitalWrite(DIR[id2], LOW);
   digitalWrite(DIR[counterId1], HIGH);
   if(id2 >= 0) digitalWrite(DIR[counterId2], HIGH);
-  for (int i = 0; i < 640 * 8; i++)
+  for (int i = 0; i < stepCount; i++)
   {
     digitalWrite(PUL[id1], HIGH);
     if(id2 >= 0) digitalWrite(PUL[id2], HIGH);
